@@ -1,0 +1,108 @@
+body{
+      background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(img/Background.png);
+      background-size:cover;
+      background-position: center;
+      height: 100%;
+      background-attachment: fixed;
+}
+
+.container{
+    padding: 0;
+    -webkit-box-shadow: 2px 2px 44px 2px #000000; 
+    box-shadow: 2px 2px 44px 2px #000000;
+}
+
+.screen{
+    background-color: rgba(132, 132, 132, 0.9);
+    margin-top: 200px;
+    width: 330px;
+    height: 150px;
+    text-align: right;
+
+    color: #0b0b0b
+    
+}
+
+.table-bordered,
+cener-the-calculator,
+body{
+    width: 330px;;
+    margin: 0 auto;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.table-bordered{
+    text-align: center;
+    color: white;
+    background-color: rgba(132, 132, 132, 0.9);
+    border:2px solid rgba(132, 132, 132, 0.9); ;
+}
+
+button{
+    margin: 0;
+    width:96%;
+    height: 96%;
+}
+
+.table td{
+    padding: 0.1px;
+    vertical-align: top;
+    height: 60px;
+    border: none;
+}
+
+/******* Display ********/
+
+
+#tmp{
+    height: 30%;
+    font-size: 140%;
+    color: #b2b2b2;
+    padding-top: 5px;
+}
+
+#main{
+    height: 55%;
+    border-top: 2px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+    font-size: 350%;
+    color: rgb(44, 44, 44);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**/
+    

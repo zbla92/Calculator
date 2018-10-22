@@ -71,17 +71,22 @@ button{
 
 
 
-
-#id--equal{
+/***************UNIQUE BUTTON STYLES*/
+.id__equal{
     color: red;
     font-size: 150%;
+    color: red;
 }
 
+.num{background-color: rgba(255, 255, 255, 0.01);}
+
+.num:hover{background-color: rgba(92, 91, 96, 0.23);}
 
 
-
-
-
+.id__plus{color: chartreuse}
+.id__minus{color: yellow}
+.id__times{color:deeppink}
+.id__devide{color:orangered}
 
 
 

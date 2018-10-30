@@ -3,9 +3,31 @@
 //////////////////////////////////////////////
 
 var calculatorController = (function(){
-   
+    var preOperation;
+    var postOperation;
     
      
+    
+    
+return{
+    getRes: function(){
+        return{   
+            preOp: preOperation,
+            postOp: postOperation
+        }
+        
+    },
+    
+    tmpEqual: function(preOp,operation, postOp){
+        return{
+            operation(preOp, postOp){
+                console.log('get back to this')
+            }
+        }
+    }
+    
+   
+}
     
     
 
@@ -76,13 +98,22 @@ var UIController = (function(){
         btn2: '.id__2',
         btn1: '.id__1',
         btn0: '.id__0',
-        equalBtn: '.id__equal'
-    }
+        equalBtn: '.id__equal',
+        operationKeys: '.operation__key'
+    };
+        
+
+    
     return{
         
         getDOMstrings: function(){
                 return DOMvariables;
-            }
+            },
+        
+        updateTmpScore: function(a){
+            return document.querySelector('.main').textContent = a;
+            
+        }
         
         
     }
@@ -124,7 +155,9 @@ var UIController = (function(){
 //////////////////////////////////////////////
 
 var controller = (function(UICtrl, CalCtrl){
-    
+    var tmpPre;
+    var tmpPost;
+    var operation;
     
     /////////////////////EVENT LISTENERS//////////////////
     var tmpResult = 0;
@@ -154,83 +187,75 @@ var controller = (function(UICtrl, CalCtrl){
     
     // Oduzimanje
     document.querySelector(DOMstrings.minusBtn).addEventListener('click', function(){
-        // zavrsi operaciju koja je do sad unesena
-        
-        
-        //resetuj tmp da moze iduci broj da se kuca
-        
-        //nakon ukucanog broja predaj informaciju da vidis koja ce operacija biti iduca
-        num = +tmp;
-        tmp = '';
-        tmpResult -= num;
-        console.log(tmpResult)
-        console.log(tmpResult)
+
     })
     
     
 ////////////////////////////////////////////////////////////////////////////////////////   
 //////////////////////////NUMPAD////////////////////////////////////////////////////////
-var num;
+var num ;
 var tmp = '';
 var numPress= '';
 
     // Number.
         document.querySelector(DOMstrings.pointBtn).addEventListener('click', function(){
-            numPress = '.'; tmp = tmp + numPress;
-
+            numPress = '.'; tmp = tmp + numPress; UICtrl.updateTmpScore(tmp);
         });
     // Number0
         document.querySelector(DOMstrings.btn0).addEventListener('click', function(){
-            numPress = '0'; tmp = tmp + numPress;
+            numPress = '0'; tmp = tmp + numPress; UICtrl.updateTmpScore(tmp);
+
 
         });
     // Number1
         document.querySelector(DOMstrings.btn1).addEventListener('click', function(){
-            numPress = '1'; tmp = tmp + numPress;
+            numPress = '1'; tmp = tmp + numPress;UICtrl.updateTmpScore(tmp);
 
         });
     // Number2
         document.querySelector(DOMstrings.btn2).addEventListener('click', function(){
-            numPress = '2'; tmp = tmp + numPress;
+            numPress = '2'; tmp = tmp + numPress; UICtrl.updateTmpScore(tmp);
 
         });
     // Number3
         document.querySelector(DOMstrings.btn3).addEventListener('click', function(){
-            numPress = '3'; tmp = tmp + numPress;
-
+            numPress = '3'; tmp = tmp + numPress; UICtrl.updateTmpScore(tmp);
+ 
         });
     // Number4
         document.querySelector(DOMstrings.btn4).addEventListener('click', function(){
-            numPress = '4'; tmp = tmp + numPress;
+            numPress = '4'; tmp = tmp + numPress; UICtrl.updateTmpScore(tmp);
 
         });
     // Number5
         document.querySelector(DOMstrings.btn5).addEventListener('click', function(){
-            numPress = '5'; tmp = tmp + numPress;
+            numPress = '5'; tmp = tmp + numPress; UICtrl.updateTmpScore(tmp);
 
         });
     // Number6
         document.querySelector(DOMstrings.btn6).addEventListener('click', function(){
-            numPress = '6'; tmp = tmp + numPress;
+            numPress = '6'; tmp = tmp + numPress; UICtrl.updateTmpScore(tmp);
 
         });
     // Number7
         document.querySelector(DOMstrings.btn7).addEventListener('click', function(){
-            numPress = '7'; tmp = tmp + numPress;
+            numPress = '7'; tmp = tmp + numPress; UICtrl.updateTmpScore(tmp);
 
         });
     // Number8
         document.querySelector(DOMstrings.btn8).addEventListener('click', function(){
-            numPress = '8';  tmp = tmp + numPress;
+            numPress = '8';  tmp = tmp + numPress; UICtrl.updateTmpScore(tmp);
 
         });
     // Number9
         document.querySelector(DOMstrings.btn9).addEventListener('click', function(){
-            numPress = '9';  tmp = tmp + numPress;
+            numPress = '9';  tmp = tmp + numPress; UICtrl.updateTmpScore(tmp);
 
         });
     
     
+        ///////////////////////////Perform some Functions////////////////////////////////////////////////
+        
 
 return{
     
@@ -241,7 +266,7 @@ return{
     
 }
     
-    
+
     
 })(UIController, calculatorController);
 

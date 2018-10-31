@@ -3,36 +3,29 @@
 //////////////////////////////////////////////
 
 var calculatorController = (function(){
-    var preOperation;
-    var postOperation;
-    
-     
-    
-    
-return{
-    getRes: function(){
-        return{   
-            preOp: preOperation,
-            postOp: postOperation
-        }
-        
+
+var Operations = {
+    minus: function(a,b){
+        return a - b;
     },
-    
-    tmpEqual: function(preOp,operation, postOp){
-        return{
-            operation(preOp, postOp){
-                console.log('get back to this')
-            }
-        }
+    plus: function(a,b){
+        return a + b;
+    }
+}
+
+return{
+    getCalculatorOperations: function(){
+        return Operations;
     }
     
-   
+    
+    
 }
-    
-    
+
+
+
 
 })();
-
 
 
 
@@ -155,34 +148,39 @@ var UIController = (function(){
 //////////////////////////////////////////////
 
 var controller = (function(UICtrl, CalCtrl){
-    var tmpPre;
-    var tmpPost;
-    var operation;
+    var tmpPre = 0; // Broj koji cuvam dok se naredni znak ne pricine
+    var tmpPost = 0 // Broj
+   
     
     /////////////////////EVENT LISTENERS//////////////////
-    var tmpResult = 0;
+    var tmpResult = 10;
     //Input Class Variables
         var DOMstrings = UICtrl.getDOMstrings();
+        var calcOperations = CalCtrl.getCalculatorOperations();
+     var operation = calcOperations.plus; // Cuvam funkciju koja ce se  izvrsit
     
     
+    
+    ///////////////////// OPERATION KEYS ///////////////////////////////////////
     //Percentage
     document.querySelector(DOMstrings.percentageBtn).addEventListener('click', function(){
         console.log('radi')
         // Izracunaj
     });
     
-    document.addEventListener('keypress', function(event){
-        if(event.keycode === 37 || event.which === 37){
-           console.log('radi')
-           }
-    });
+    
     
     // Sabiranje
     document.querySelector(DOMstrings.plusBtn).addEventListener('click', function(){
-        num = +tmp;
-        tmp = '';
-        tmpResult += num;
-        console.log(tmpResult)
+        tmpresult = tmp;    
+        console.log(`tmpResult = ${tmpResult} prije  operacije`)
+        // Temp Rezultat = Sabiranje 2 broja
+            console.log(tmpResult);
+             console.log(tmpPost);
+            tmpResult = operation(tmpResult, tmpPost);
+        
+        // Temp rezulatat nakon sabiranja
+            operation = calcOperations.plus
     })
     
     // Oduzimanje
@@ -192,8 +190,7 @@ var controller = (function(UICtrl, CalCtrl){
     
     
 ////////////////////////////////////////////////////////////////////////////////////////   
-//////////////////////////NUMPAD////////////////////////////////////////////////////////
-var num ;
+//////////////////////////NUM KEYS////////////////////////////////////////////////////////
 var tmp = '';
 var numPress= '';
 

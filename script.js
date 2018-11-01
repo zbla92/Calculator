@@ -10,13 +10,21 @@ var Operations = {
     },
     plus: function(a,b){
         return a + b;
+    },
+    multiply: function(a,b){
+        return a * b;
+    },
+    divide: function(a, b){
+        return a / b;
     }
+    
 }
 
 return{
     getCalculatorOperations: function(){
         return Operations;
-    }
+    },
+    
     
     
     
@@ -92,7 +100,9 @@ var UIController = (function(){
         btn1: '.id__1',
         btn0: '.id__0',
         equalBtn: '.id__equal',
-        operationKeys: '.operation__key'
+        operationKeys: '.operation__key',
+        mainDisplay: '.main',
+        tmpDisplay: '.tmp'
     };
         
 
@@ -103,10 +113,14 @@ var UIController = (function(){
                 return DOMvariables;
             },
         
-        updateTmpScore: function(a){
-            return document.querySelector('.main').textContent = a;
+        updateMainScreen: function(e){
+            return document.querySelector(DOMvariables.mainDisplay).textContent = e;
             
+        },
+        updateTmpScreen: function(e){
+            return document.querySelector(DOMvariables.tmpDisplay).textContent = e
         }
+        
         
         
     }
@@ -148,46 +162,85 @@ var UIController = (function(){
 //////////////////////////////////////////////
 
 var controller = (function(UICtrl, CalCtrl){
+    var historyString = '';
     var tmpPre = 0; // Broj koji cuvam dok se naredni znak ne pricine
-    var tmpPost = 0 // Broj
+    var tmpPost; // UkucaniBroj
+    var tmpResult;
    
     
     /////////////////////EVENT LISTENERS//////////////////
-    var tmpResult = 10;
     //Input Class Variables
         var DOMstrings = UICtrl.getDOMstrings();
         var calcOperations = CalCtrl.getCalculatorOperations();
-     var operation = calcOperations.plus; // Cuvam funkciju koja ce se  izvrsit
+        var operation = calcOperations.plus; // Cuvam funkciju koja ce se  izvrsit
     
     
     
     ///////////////////// OPERATION KEYS ///////////////////////////////////////
-    //Percentage
-    document.querySelector(DOMstrings.percentageBtn).addEventListener('click', function(){
-        console.log('radi')
-        // Izracunaj
-    });
     
-    
+    //********************Mathematical Operations*****************************//
     
     // Sabiranje
     document.querySelector(DOMstrings.plusBtn).addEventListener('click', function(){
-        tmpresult = tmp;    
-        console.log(`tmpResult = ${tmpResult} prije  operacije`)
-        // Temp Rezultat = Sabiranje 2 broja
-            console.log(tmpResult);
-             console.log(tmpPost);
-            tmpResult = operation(tmpResult, tmpPost);
+        // Izracunaj trenutni rezultat sa prethodnom operacijom
+            completeTheCalculation();
         
-        // Temp rezulatat nakon sabiranja
-            operation = calcOperations.plus
+        //Update UI
+            UICtrl.updateMainScreen(tmpResult);
+             stringUpdatingModule(' + ')
+      
+        //Post Calculation 
+            operation = calcOperations.plus;
+            tmp = '';
     })
     
     // Oduzimanje
     document.querySelector(DOMstrings.minusBtn).addEventListener('click', function(){
-
+        // Izracunaj trenutni rezultat sa prethodnom operacijom
+            completeTheCalculation();
+        
+        //Update UI
+            UICtrl.updateMainScreen(tmpResult);
+            stringUpdatingModule(' - ')
+        //Post Calculation 
+        operation = calcOperations.minus;
+        tmp = '';
     })
     
+    
+    // Multiply
+    document.querySelector(DOMstrings.multiplyBtn).addEventListener('click', function(){
+       // Izracunaj trenutni rezultat sa prethodnom operacijom
+            completeTheCalculation();
+        
+        //Update UI
+            UICtrl.updateMainScreen(tmpResult);
+            stringUpdatingModule(' \u00d7 ')
+        //Post Calculation 
+        
+        operation = calcOperations.multiply;
+        tmp = '';
+    });
+    
+    // Division
+    document.querySelector(DOMstrings.devideBtn).addEventListener('click', function(){
+        completeTheCalculation();
+        
+        UICtrl.updateMainScreen(tmpResult);
+        stringUpdatingModule(' \u00F7 ')
+        
+        operation = calcOperations.divide;
+        tmp = '';
+    })
+    
+    
+    
+    //********************Control Operations*****************************//
+    
+    //Equal
+    document.querySelector(DOMstrings.equalBtn).addEventListener('click', function(){
+        
+    })
     
 ////////////////////////////////////////////////////////////////////////////////////////   
 //////////////////////////NUM KEYS////////////////////////////////////////////////////////
@@ -196,64 +249,93 @@ var numPress= '';
 
     // Number.
         document.querySelector(DOMstrings.pointBtn).addEventListener('click', function(){
-            numPress = '.'; tmp = tmp + numPress; UICtrl.updateTmpScore(tmp);
+            numPress = '.'; tmp = tmp + numPress; UICtrl.updateMainScreen(tmp);
         });
     // Number0
         document.querySelector(DOMstrings.btn0).addEventListener('click', function(){
-            numPress = '0'; tmp = tmp + numPress; UICtrl.updateTmpScore(tmp);
+           if(tmp !== 0){
+                numPress = '0'; tmp = tmp + numPress; UICtrl.updateMainScreen(tmp);
+           }
 
 
         });
     // Number1
         document.querySelector(DOMstrings.btn1).addEventListener('click', function(){
-            numPress = '1'; tmp = tmp + numPress;UICtrl.updateTmpScore(tmp);
+            numPress = '1'; tmp = tmp + numPress;UICtrl.updateMainScreen(tmp);
 
         });
     // Number2
         document.querySelector(DOMstrings.btn2).addEventListener('click', function(){
-            numPress = '2'; tmp = tmp + numPress; UICtrl.updateTmpScore(tmp);
+            numPress = '2'; tmp = tmp + numPress; UICtrl.updateMainScreen(tmp);
 
         });
     // Number3
         document.querySelector(DOMstrings.btn3).addEventListener('click', function(){
-            numPress = '3'; tmp = tmp + numPress; UICtrl.updateTmpScore(tmp);
+            numPress = '3'; tmp = tmp + numPress; UICtrl.updateMainScreen(tmp);
  
         });
     // Number4
         document.querySelector(DOMstrings.btn4).addEventListener('click', function(){
-            numPress = '4'; tmp = tmp + numPress; UICtrl.updateTmpScore(tmp);
+            numPress = '4'; tmp = tmp + numPress; UICtrl.updateMainScreen(tmp);
 
         });
     // Number5
         document.querySelector(DOMstrings.btn5).addEventListener('click', function(){
-            numPress = '5'; tmp = tmp + numPress; UICtrl.updateTmpScore(tmp);
+            numPress = '5'; tmp = tmp + numPress; UICtrl.updateMainScreen(tmp);
 
         });
     // Number6
         document.querySelector(DOMstrings.btn6).addEventListener('click', function(){
-            numPress = '6'; tmp = tmp + numPress; UICtrl.updateTmpScore(tmp);
+            numPress = '6'; tmp = tmp + numPress; UICtrl.updateMainScreen(tmp);
 
         });
     // Number7
         document.querySelector(DOMstrings.btn7).addEventListener('click', function(){
-            numPress = '7'; tmp = tmp + numPress; UICtrl.updateTmpScore(tmp);
+            numPress = '7'; tmp = tmp + numPress; UICtrl.updateMainScreen(tmp);
 
         });
     // Number8
         document.querySelector(DOMstrings.btn8).addEventListener('click', function(){
-            numPress = '8';  tmp = tmp + numPress; UICtrl.updateTmpScore(tmp);
+            numPress = '8';  tmp = tmp + numPress; UICtrl.updateMainScreen(tmp);
 
         });
     // Number9
         document.querySelector(DOMstrings.btn9).addEventListener('click', function(){
-            numPress = '9';  tmp = tmp + numPress; UICtrl.updateTmpScore(tmp);
+            numPress = '9';  tmp = tmp + numPress; UICtrl.updateMainScreen(tmp);
 
         });
     
     
         ///////////////////////////Perform some Functions////////////////////////////////////////////////
-        
+        //*********************************************************************************************//        
+            //Initialize Calculator
+            (function init(){
+            historyString = '';
+            tmpPre = 0;
+            tmpPost= 0;
+            tmp = '';
+                
+            // Update UI
+                UICtrl.updateMainScreen('0');
+                UICtrl.updateTmpScreen('Calculator Initialized');
+            })();
+           
+            function completeTheCalculation(){
+                 tmpPost = +tmp; // Trenutno ukucan String prebacujem u Int kroz varijabluy tmpPost
+                 tmpResult = operation(tmpPre, tmpPost) // Pozivam prethodno ukucanu operaciju
+                 tmpPre = tmpResult
+            };
 
+            //Modul za updateovanje stringa
+            function stringUpdatingModule(input){
+                historyString += tmp;
+                historyString += input;
+                UICtrl.updateTmpScreen(historyString)
+            };
+
+
+            
+    
 return{
     
     getTmp: function(){

@@ -54,19 +54,21 @@ button{
 /******* Display ********/
 
 
-#tmp{
+.tmp{
     height: 30%;
     font-size: 140%;
-    color: #b2b2b2;
+    color: rgba(255, 255, 255, 0.74);
     padding-top: 5px;
+    padding-right: 10px;
 }
 
-#main{
+.main{
     height: 55%;
     border-top: 2px solid rgba(0, 0, 0, 0.1);
     border-bottom: 2px solid rgba(0, 0, 0, 0.1);
     font-size: 350%;
     color: rgb(44, 44, 44);
+    padding-right: 10px;
 }
 
 

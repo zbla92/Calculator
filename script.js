@@ -16,6 +16,15 @@ var Operations = {
     },
     divide: function(a, b){
         return a / b;
+    },
+    underX: function(a){
+        return 1 / a;
+    },
+    squared: function(a){
+        return a * a;
+    },
+    rootOf: function(a){
+        return Math.sqrt(a);
     }
     
 }
@@ -34,34 +43,6 @@ return{
 
 
 })();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -114,11 +95,17 @@ var UIController = (function(){
             },
         
         updateMainScreen: function(e){
-            return document.querySelector(DOMvariables.mainDisplay).textContent = e;
+            if(e === ''){
+                return document.querySelector(DOMvariables.mainDisplay).textContent = 0;
+            }else if((e % 1 )!== 0){
+                return document.querySelector(DOMvariables.mainDisplay).textContent = parseFloat(e).toFixed(2);
+            }else{
+                return document.querySelector(DOMvariables.mainDisplay).textContent = e;
+            }
             
         },
         updateTmpScreen: function(e){
-            return document.querySelector(DOMvariables.tmpDisplay).textContent = e
+            return document.querySelector(DOMvariables.tmpDisplay).textContent = e;
         }
         
         
@@ -126,26 +113,6 @@ var UIController = (function(){
     }
      
 })();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -234,12 +201,52 @@ var controller = (function(UICtrl, CalCtrl){
     })
     
     
+    /////////////////OneNumbered Functions//////////////////////////////////////
+    
+    // 1 undedr x
+    document.querySelector(DOMstrings.underXbtn).addEventListener('click', function(){
+        completeTheSingleNumberedCalculation(calcOperations.underX);
+         UICtrl.updateMainScreen(tmpResult);
+  
+    });
+    
+    // Squared
+    document.querySelector(DOMstrings.squareBtn).addEventListener('click',function(){
+       completeTheSingleNumberedCalculation(calcOperations.squared);
+        UICtrl.updateMainScreen(tmpResult)
+    });
+    
+    // Squared root
+    document.querySelector(DOMstrings.squareRootBtn).addEventListener('click',function(){
+        completeTheSingleNumberedCalculation(calcOperations.rootOf)
+        UICtrl.updateMainScreen(tmpResult)
+    })
+    
     
     //********************Control Operations*****************************//
     
     //Equal
     document.querySelector(DOMstrings.equalBtn).addEventListener('click', function(){
-        
+        completeTheCalculation();
+        UICtrl.updateMainScreen(tmpResult);
+        stringUpdatingModule('');
+        operation = calcOperations.plus;
+        tmp = '';
+        historyString = tmpResult;UICtrl.updateTmpScreen('')
+    })
+    
+    // C
+    document.querySelector(DOMstrings.clearBtn).addEventListener('click', function(){
+        initialize(); 
+    })
+    // CE
+    document.querySelector(DOMstrings.btnCE).addEventListener('click', function(){
+        initialize(); 
+    })
+    // ERASE BUTTON
+    document.querySelector(DOMstrings.eraseBtn).addEventListener('click', function(){
+        tmp = tmp.slice(0, -1);
+        UICtrl.updateMainScreen(tmp);
     })
     
 ////////////////////////////////////////////////////////////////////////////////////////   
@@ -306,25 +313,36 @@ var numPress= '';
         });
     
     
+    
         ///////////////////////////Perform some Functions////////////////////////////////////////////////
         //*********************************************************************************************//        
             //Initialize Calculator
-            (function init(){
-            historyString = '';
-            tmpPre = 0;
-            tmpPost= 0;
-            tmp = '';
+            function initialize(){
+                historyString = '';
+                tmpPre = 0;
+                tmpPost= 0;
+                tmp = '';
                 
             // Update UI
                 UICtrl.updateMainScreen('0');
                 UICtrl.updateTmpScreen('Calculator Initialized');
-            })();
-           
-            function completeTheCalculation(){
+            };
+            
+             function completeTheCalculation(){
                  tmpPost = +tmp; // Trenutno ukucan String prebacujem u Int kroz varijabluy tmpPost
                  tmpResult = operation(tmpPre, tmpPost) // Pozivam prethodno ukucanu operaciju
                  tmpPre = tmpResult
             };
+            
+            function completeTheSingleNumberedCalculation(f){
+                tmpPost = +tmp;
+                tmpResult = f(tmpPost);
+                tmpPre += tmpResult;
+                UICtrl.updateTmpScreen(tmpResult)
+                historyString += tmpResult
+
+                tmp = '';
+            }
 
             //Modul za updateovanje stringa
             function stringUpdatingModule(input){
@@ -334,7 +352,7 @@ var numPress= '';
             };
 
 
-            
+           initialize(); 
     
 return{
     
